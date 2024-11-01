@@ -1,0 +1,106 @@
+{% extends "./admin/base.html" %}
+{% block content %}
+
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" action="/admin-staff" method="post">
+                        <input type="hidden" name="staff_id" value="{{ staff_to_edit.id if staff_to_edit else '' }}">
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">staff Name</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="text" placeholder="staff name here" name="staff"  value="{{ staff_to_edit.staff_name if staff_to_edit else '' }}"  class="form-control p-0 border-0">
+                            </div>
+                            <div class="col-md-12 border-bottom p-0">
+                                <textarea placeholder="staff details here" name="details"  class="form-control p-0 border-0">{{ staff_to_edit.staff_details if staff_to_edit else '' }}</textarea>
+                            </div>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="text" placeholder="username" name="username"  value="{{ staff_to_edit.username if staff_to_edit else '' }}"  class="form-control p-0 border-0">
+                            </div>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="password" placeholder="password" name="password"  value="{{ staff_to_edit.password if staff_to_edit else '' }}"  class="form-control p-0 border-0">
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-12">
+            <div class="white-box">
+                <div class="d-md-flex mb-3">
+                    <h3 class="box-title mb-0">Data Table</h3>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table no-wrap">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">#</th>
+                                <th class="border-top-0">Name</th>
+                                <th class="border-top-0">Details</th>
+                                <th class="border-top-0">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for staff in staffs %}
+                            <tr>
+                                <td>{{ staff.id }}</td>
+                                <td class="txt-oflo">{{ staff.staff_name }}</td>
+                                <td class="txt-oflo">{{ staff.staff_details }}</td>
+
+                                <td>
+                                    <a href="{{ url_for('adminstaff', edit=staff.id) }}" class="btn btn-info btn-sm">Edit</a> 
+                                    <form action="{{ url_for('delete_staff', staff_id=staff.id) }}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+    <!-- Row -->
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+</div>
+
+
+
+{% endblock%}

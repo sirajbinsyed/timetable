@@ -1,0 +1,96 @@
+{% extends "./admin/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" action="/admin-assign-subject" method="post">
+                        <input type="hidden" name="assign_id" value="{{ assign_to_edit.id if assign_to_edit else '' }}">
+                        
+                        <!-- Staff Dropdown -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Select Staff</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <select name="staff_id" class="form-control p-0 border-0">
+                                    {% for staff in staff_members %}
+                                    <option value="{{ staff.id }}" {% if assign_to_edit and assign_to_edit.staff_id == staff.id %} selected {% endif %}>
+                                        {{ staff.staff_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Subject Dropdown -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Select Subject</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <select name="subject_id" class="form-control p-0 border-0">
+                                    {% for subject in subjects %}
+                                    <option value="{{ subject.id }}" {% if assign_to_edit and assign_to_edit.subject_id == subject.id %} selected {% endif %}>
+                                        {{ subject.subject_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-12">
+            <div class="white-box">
+                <div class="d-md-flex mb-3">
+                    <h3 class="box-title mb-0">Assigned Subjects Table</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table no-wrap">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">#</th>
+                                <th class="border-top-0">Staff Name</th>
+                                <th class="border-top-0">Subject Name</th>
+                                <th class="border-top-0">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for assign in assigned_subjects %}
+                            <tr>
+                                <td>{{ assign.id }}</td>
+                                <td class="txt-oflo">{{ assign.staff_name }}</td>
+                                <td class="txt-oflo">{{ assign.subject_name }}</td>
+                                <td>
+                                    <a href="{{ url_for('adminassignsubject', edit=assign.id) }}" class="btn btn-info btn-sm">Edit</a> 
+                                    <form action="{{ url_for('delete_assign_subject', assign_id=assign.id) }}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+    <!-- Row -->
+</div>
+
+{% endblock %}

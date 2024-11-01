@@ -1,0 +1,106 @@
+{% extends "./admin/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" action="/admin-period" method="post">
+                        <input type="hidden" name="period_id" value="{{ period_to_edit.id if period_to_edit else '' }}">
+                        
+                        <!-- Day Dropdown -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Day</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <select name="day" class="form-control p-0 border-0">
+                                    {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %}
+                                    <option value="{{ day }}" {% if period_to_edit and period_to_edit.day == day %} selected {% endif %}>
+                                        {{ day }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Period -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Period</label>
+                            <select class="form-control p-0 border-0" name="period">
+                                <option value="first" {% if period_to_edit.period == 'first' %} selected {% endif %}>first</option>
+                                <option value="second" {% if period_to_edit.period == 'second' %} selected {% endif %}>second</option>
+                                <option value="third" {% if period_to_edit.period == 'third' %} selected {% endif %}>third</option>
+                                <option value="forth" {% if period_to_edit.period == 'forth' %} selected {% endif %}>forth</option>
+                            </select>
+                            <!-- <div class="col-md-12 border-bottom p-0">
+                                <input type="text" placeholder="Enter period name" name="period" value="{{ period_to_edit.period if period_to_edit else '' }}" class="form-control p-0 border-0">
+                            </div> -->
+                        </div>
+
+                        <!-- Time -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Time</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="time" placeholder="Enter time" name="time" value="{{ period_to_edit.time if period_to_edit else '' }}" class="form-control p-0 border-0">
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-12">
+            <div class="white-box">
+                <div class="d-md-flex mb-3">
+                    <h3 class="box-title mb-0">Periods Table</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table no-wrap">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">#</th>
+                                <th class="border-top-0">Day</th>
+                                <th class="border-top-0">Period</th>
+                                <th class="border-top-0">Time</th>
+                                <th class="border-top-0">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for period in periods %}
+                            <tr>
+                                <td>{{ period.id }}</td>
+                                <td class="txt-oflo">{{ period.day }}</td>
+                                <td class="txt-oflo">{{ period.period }}</td>
+                                <td class="txt-oflo">{{ period.time }}</td>
+                                <td>
+                                    <a href="{{ url_for('adminperiod', edit=period.id) }}" class="btn btn-info btn-sm">Edit</a> 
+                                    <form action="{{ url_for('delete_period', period_id=period.id) }}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+    <!-- Row -->
+</div>
+
+{% endblock %}

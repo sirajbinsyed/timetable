@@ -1,0 +1,243 @@
+{% extends "./admin/base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+    <div class="row">
+        <!-- Column for Form -->
+        <div class="col-lg-12 col-xlg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" action="/change-staff" method="post">
+                        <input type="hidden" name="id" value="{{ replaced_staff_to_edit.id if replaced_staff_to_edit else '' }}">
+                         <!-- Hidden inputs to hold staff_name and subject_name -->
+                        <input type="hidden" id="hidden_staff_name" name="staff_name" value="">
+                        <input type="hidden" id="hidden_subject_name" name="subject_name" value="">
+
+                         
+                        <!-- Date Input -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Date</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="date" id="date_input" name="date" value="{{ replaced_staff_to_edit.date if replaced_staff_to_edit else '' }}" class="form-control p-0 border-0">
+                            </div>
+                        </div>
+
+                         <!-- Period Input -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Period</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <select id="period_dropdown" name="period" class="form-control p-0 border-0">
+                                    <option value="">Select Period</option>
+                                    {% if replaced_staff_to_edit %}
+                                        <option value="First" {{ 'selected' if replaced_staff_to_edit.period == 'First' else '' }}>First</option>
+                                        <option value="Second" {{ 'selected' if replaced_staff_to_edit.period == 'Second' else '' }}>Second</option>
+                                        <option value="Third" {{ 'selected' if replaced_staff_to_edit.period == 'Third' else '' }}>Third</option>
+                                        <option value="Fourth" {{ 'selected' if replaced_staff_to_edit.period == 'Fourth' else '' }}>Fourth</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Course Dropdown -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Course </label>
+
+                            <div class="col-md-12 border-bottom p-0">
+                                <select name="course_id" class="form-control p-0 border-0">
+                                   
+                                    {% for courses in course %}
+                                    <option value="{{ courses.id }}" {% if replaced_staff_to_edit and replaced_staff_to_edit.course_id == courses.id %} selected {% endif %}>
+                                        {{ courses.course_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        
+
+                      <!-- Staff Dropdown -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Replacing Staff</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <select id="subject_search" name="staff_id" class="form-control p-0 border-0">
+                                    <option value="">Select Staff</option>
+                                    {% for staff in staffs %}
+                                    <option value="{{ staff.id }}" data-name="{{ staff.staff_name }}" {% if staff_subjects and staff.id == request.args.get('staff_id') %} selected {% endif %}>
+                                        {{ staff.staff_name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                       
+                       
+
+                        <!-- Subject Dropdown -->
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Replacing Subject</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <select id="subject_dropdown" name="subject" class="form-control p-0 border-0">
+                                    <option value="">Select Subject</option>
+                                    {% if staff_subjects %}
+                                        {% for subject in staff_subjects %}
+                                            <option value="{{ subject.subject_id }}">{{ subject.subject_name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                      
+
+                      
+                        
+                        <!-- Submit Button -->
+                        <div class="form-group mb-4">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column for Table -->
+        <div class="col-lg-12 col-xlg-12 col-md-12">
+            <div class="white-box">
+                <div class="d-md-flex mb-3">
+                    <h3 class="box-title mb-0">Replaced Staff Table</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table no-wrap">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Staff</th>
+                                <th>Period</th>
+                                <th>Subject</th>
+                                <th>Course</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for staff in replaced_staff %}
+                            <tr>
+                                <td>{{ staff.id }}</td>
+                                <td>{{ staff.date }}</td>
+                                <td>{{ staff.replaced_staff }}</td>
+                                <td>{{ staff.period }}</td>
+                                <td>{{ staff.replaced_subject }}</td>
+                                <td>{{ staff.course_name }}</td>
+                                <td>
+                                    <a href="{{ url_for('changestaff', edit=staff.id) }}" class="btn btn-info btn-sm">Edit</a>
+                                    <form action="{{ url_for('delete_replace_staff', replace_id=staff.id) }}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+document.getElementById('date_input').addEventListener('change', function() {
+        var selectedDate = this.value;
+        if (selectedDate) {
+            // Make an AJAX call to fetch periods for the selected date
+            fetch(`/get_period?date=${selectedDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Clear existing options in the period dropdown
+                    var periodDropdown = document.getElementById('period_dropdown');
+                    periodDropdown.innerHTML = '<option value="">Select Period</option>'; // Reset options
+
+                    // Populate the period dropdown with new options
+                    data.forEach(function(period) {
+                        var option = document.createElement('option');
+                        option.value = period.period; // Make sure your JSON has a field 'period'
+                        option.textContent = period.period; // Adjust according to your JSON structure
+                        periodDropdown.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching periods:', error));
+        } else {
+            // Reset the period dropdown if no date is selected
+            document.getElementById('period_dropdown').innerHTML = '<option value="">Select Period</option>';
+        }
+    });
+
+
+   document.getElementById('subject_search').addEventListener('change', function() {
+    var staffId = this.value;
+
+    // Get the selected course ID
+    var courseId = document.querySelector('select[name="course_id"]').value;
+
+    if (staffId) {
+        // Make an AJAX call to fetch subjects for the selected staff and course
+        fetch(`/get_subjects?staff_id=${staffId}&course_id=${courseId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Clear existing options in the subject dropdown
+                var subjectDropdown = document.getElementById('subject_dropdown');
+                subjectDropdown.innerHTML = '<option value="">Select Subject</option>'; // Reset options
+
+                // Check if any subjects are returned
+                if (data.length === 0) {
+                    // If no subjects are found, display a message
+                    var option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'No subjects for the selected staff';
+                    option.disabled = true; // Disable the placeholder
+                    subjectDropdown.appendChild(option);
+                } else {
+                    // Populate the subject dropdown with new options
+                    data.forEach(function(subject) {
+                        var option = document.createElement('option');
+                        option.value = subject.subject_id;
+                        option.textContent = subject.subject_name;
+                        subjectDropdown.appendChild(option);
+                    });
+                }
+
+                // Call function to set staff name
+                setStaffAndSubjectNames(); // Set staff name after loading subjects
+            })
+            .catch(error => console.error('Error fetching subjects:', error));
+    } else {
+        // Reset the subject dropdown if no staff is selected
+        document.getElementById('subject_dropdown').innerHTML = '<option value="">Select Subject</option>';
+        // Reset hidden fields
+        document.getElementById('hidden_staff_name').value = '';
+        document.getElementById('hidden_subject_name').value = '';
+    }
+});
+
+    document.getElementById('subject_dropdown').addEventListener('change', setStaffAndSubjectNames);
+
+    function setStaffAndSubjectNames() {
+        var staffSelect = document.getElementById('subject_search');
+        var subjectSelect = document.getElementById('subject_dropdown');
+
+        var selectedStaffOption = staffSelect.options[staffSelect.selectedIndex];
+        var selectedSubjectOption = subjectSelect.options[subjectSelect.selectedIndex];
+
+        // Set the hidden inputs with staff_name and subject_name
+        document.getElementById('hidden_staff_name').value = selectedStaffOption.getAttribute('data-name') || '';
+        document.getElementById('hidden_subject_name').value = selectedSubjectOption ? selectedSubjectOption.textContent : '';
+    }
+</script>
+{% endblock %}

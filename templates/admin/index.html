@@ -1,0 +1,116 @@
+{% extends "./admin/base.html" %}
+{% block content %}
+
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Three charts -->
+    <!-- ============================================================== -->
+    <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-12">
+            <div class="white-box analytics-info">
+                <h3 class="box-title">Total Courses</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <li>
+                        <div id="sparklinedash"><canvas width="67" height="30"
+                                style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                        </div>
+                    </li>
+                    <li class="ms-auto"><span class="counter text-success">{{data.course.count}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <div class="white-box analytics-info">
+                <h3 class="box-title">Total Staffs</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <li>
+                        <div id="sparklinedash2"><canvas width="67" height="30"
+                                style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                        </div>
+                    </li>
+                    <li class="ms-auto"><span class="counter text-purple">{{data.staff.count}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <div class="white-box analytics-info">
+                <h3 class="box-title">Total Subjects</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <li>
+                        <div id="sparklinedash3"><canvas width="67" height="30"
+                                style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                        </div>
+                    </li>
+                    <li class="ms-auto"><span class="counter text-info">{{data.subject.count}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <div class="white-box analytics-info">
+                <h3 class="box-title">Total Assignments</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <li>
+                        <div id="sparklinedash4"><canvas width="67" height="30"
+                                style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                        </div>
+                    </li>
+                    <li class="ms-auto"><span class="counter text-info">{{data.assignment.count}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- PRODUCTS YEARLY SALES -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="white-box">
+                <h3 class="box-title">Desclimer from development => Automatic Timetable Generator: Simplified and Efficient</h3>
+                <div class="d-md-flex">
+                   
+                   
+                </div>
+                <p style="color:black">
+                    The automatic timetable generator is designed to streamline and automate the process of creating balanced, conflict-free schedules for courses, staff, and subjects. With this tool, you can input key parameters such as staff availability, courses, subjects, periods, and other essential criteria. The generator then uses a randomization algorithm to create a unique timetable for each week, ensuring that no conflicts occur between staff assignments or course periods.
+                </p>
+                
+                <ul style="color:black;">
+                    <li><strong>Flexible Parameters:</strong> Input the number of courses, subjects, staff members, and periods. You can adjust these values to suit your institution’s needs. The system will use these parameters to generate an optimized timetable.</li>
+                    
+                    <li><strong>Balanced Scheduling:</strong> The generator uses a mathematical approach to balance all assignments. It ensures that each staff member is distributed evenly across the subjects and periods, preventing workload overload or underuse of staff resources.</li>
+                    
+                    <li><strong>Randomness with Control:</strong> While the timetable is generated with some level of randomness, it is designed to adhere to the predefined parameters. This avoids imbalances or scheduling conflicts, but still allows for unique variations each time the timetable is generated.</li>
+                    
+                    <li><strong>Permanent Data Reset on Regeneration:</strong> Once a timetable is generated, the data is saved permanently until you decide to regenerate it. Be aware that <em>if you regenerate the timetable, all previously saved timetable data will be permanently deleted and replaced with the new schedule</em>. This ensures that there are no duplicate or conflicting schedules in the system.</li>
+                </ul>
+                
+                <p style="color:black;">
+                    <strong>Caution:</strong> When configuring the generator, ensure that the number of courses, subjects, staff, and periods are <em>mathematically feasible</em>. This means that the total number of periods, staff members, and subjects should align properly to avoid potential gaps or overloaded schedules. If the inputs are imbalanced, the timetable may become unorganized or infeasible to follow.
+                </p>
+                
+                <p style="color:black;">
+                    Use the automatic timetable generator to save time, avoid human errors, and create a well-structured timetable that fits your institution's specific needs.
+                </p>
+                
+        </div>
+    </div>
+   
+   
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- footer -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- End footer -->
+<!-- ============================================================== -->
+</div>
+
+
+{%endblock%}

@@ -1,0 +1,62 @@
+
+
+{% extends "./staff/base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+  
+
+
+    <!-- Timetables for each course -->
+    <div class="row">
+        <div class="col-lg-12">
+            {% for course in courses %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">{{ course.course_name }} Timetable</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="100">Period</th>
+                                    {% for day in days %}
+                                    <th>{{ day }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for period in periods %}
+                                <tr>
+                                    <td class="fw-bold">{{ period | capitalize }}</td>
+                                    {% for day in days %}
+                                        <td>
+                                            {% if timetables[course.id][period] and timetables[course.id][period][day] %}
+                                                <div class="class-slot" 
+                                                     data-timetable-id="{{ timetables[course.id][period][day].id }}"
+                                                     data-period-id="{{ timetables[course.id][period][day].period_id }}">
+                                                    <!-- Display Subject and Staff directly -->
+                                                    <strong>Subject:</strong> {{ timetables[course.id][period][day].subject }} <br>
+                                                    <strong>Staff:</strong> {{ timetables[course.id][period][day].staff }}
+                                                </div>
+                                            {% else %}
+                                                <span class="text-muted">Free</span>
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

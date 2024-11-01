@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Timetable</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../static/guest/style.css">
+</head>
+<body style="background-image:url(../../static/guest/banner.jpg)">
+    <style>
+        .form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(240, 235, 235, 0.5); 
+  background-size: cover;
+  margin:70px 350px;
+  padding:60px;
+  border-radius: 25px;
+  
+}
+    </style>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+    <a href="/index" class="w3-bar-item w3-button">Timetable</a>
+    <!-- Float links to the right. Hide them on small screens -->
+    <div class="w3-right w3-hide-small">
+      
+      <a href="/register" class="w3-bar-item w3-button">Register</a>
+      <a href="/login" class="w3-bar-item w3-button">Login</a>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+  <!-- Contact Section -->
+<div class="w3-container" id="contact" >
+  
+  
+    <div class="form-container">
+        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Register</h3>
+      <form action="/register" method="post"  style="background-color: rgb(255, 255, 255);padding:35px;">
+        <input class="w3-input w3-border" type="text" placeholder="name" required name="name">
+        <select class="w3-input w3-section w3-border"  required name="course">
+          {% for course in courses %}
+          <option value="{{course.id}}">{{ course.course_name }}</option>
+          {% endfor %}
+          </select>
+        <textarea class="w3-input w3-border" name="details" placeholder="details" required name="details"></textarea><br>
+        <input class="w3-input w3-border" type="text" placeholder="username" required name="username">
+                <input class="w3-input w3-section w3-border" type="password" placeholder="password" required
+                    name="password">
+        <button class="w3-button w3-black w3-section" type="submit" style="width:100%">Register</button>
+      </form>
+    </div>
+  </div>
+  
+  
+
+
+<!-- End page content -->
+</div>
+
+
+</body>
+</html>

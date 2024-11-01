@@ -1,0 +1,95 @@
+{% extends "./admin/base.html" %}
+{% block content %}
+
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-3 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" action="/admin-course" method="post">
+                        <input type="hidden" name="course_id" value="{{ course_to_edit.id if course_to_edit else '' }}">
+                        <div class="form-group mb-4">
+                            <label class="col-md-12 p-0">Course Name</label>
+                            <div class="col-md-12 border-bottom p-0">
+                                <input type="text" placeholder="course name here" name="course"  value="{{ course_to_edit.course_name if course_to_edit else '' }}"  class="form-control p-0 border-0">
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-9 col-md-12">
+            <div class="white-box">
+                <div class="d-md-flex mb-3">
+                    <h3 class="box-title mb-0">Data Table</h3>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table no-wrap">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">#</th>
+                                <th class="border-top-0">Name</th>
+                                <th class="border-top-0">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for course in courses %}
+                            <tr>
+                                <td>{{ course.id }}</td>
+                                <td class="txt-oflo">{{ course.course_name }}</td>
+
+                                <td>
+                                    <a href="{{ url_for('admincourse', edit=course.id) }}" class="btn btn-info btn-sm">Edit</a> 
+                                    <form action="{{ url_for('delete_course', course_id=course.id) }}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+    <!-- Row -->
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+</div>
+
+
+
+{% endblock%}

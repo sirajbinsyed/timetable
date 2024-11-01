@@ -1,0 +1,55 @@
+{% extends "./student/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+       
+        <!-- Column -->
+        <!-- Column -->
+        <div class="col-lg-12 col-xlg-9 col-md-12">
+            <div class="white-box">
+                <div class="d-md-flex mb-3">
+                    <h3 class="box-title mb-0">Live Assignments Table</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table no-wrap">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">#</th>
+                                <th class="border-top-0">Subject</th>
+                                <th class="border-top-0">Staff</th>
+                                <th class="border-top-0">Student</th>
+                                <th class="border-top-0">Description</th>
+                                <th class="border-top-0">Due Date</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for assignment in assignments %}
+                            <tr>
+                                <td>{{ assignment.id }}</td>
+                                <td class="txt-oflo">{{ assignment.subject_name }}</td>
+                                <td class="txt-oflo">{{ assignment.staff_name }}</td>
+                                <td class="txt-oflo">{{ assignment.student_name }}</td>
+                                <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">{{ assignment.description }}</td>
+                                <td>{{ assignment.due_date }}</td>
+                               
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Column -->
+    </div>
+    <!-- Row -->
+</div>
+
+{% endblock %}
